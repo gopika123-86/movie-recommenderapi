@@ -7,7 +7,8 @@ from app.db.database import get_db
 
 router = APIRouter()
 
-@router.get("/recommendations", response_model=list[MovieOut])
+#@router.get("/recommendations", response_model=list[MovieOut])
+@router.get("/recommendations", response_model=None)
 def get_recommendations(db: Session = get_db()):
     subquery = (
         db.query(

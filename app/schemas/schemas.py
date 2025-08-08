@@ -1,66 +1,53 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.orm import Session
+#from app.db.database import get_db
+#from app.schemas import MovieCreate, Movie
 
+#app = FastAPI()
 
+#database.Base.metadata.create_all(bind=database.engine)
 
+#@app.post('/movies/', response_model=Movie)
+#def create_movie(movie: MovieCreate, db: Session = Depends(database.get_db)):
+#    db_movie = models.Movie(**movie.dict())
+#    db.add(db_movie)
+#   db.commit()
+#    db.refresh(db_movie)
+#    return db_movie
+from pydantic import BaseModel
 
-# ------------------------------
-# User Schemas
-# ------------------------------
-
-class UserCreate(BaseModel):
-    username: str
-    email: EmailStr
-
-class UserOut(BaseModel):
-    id: int
-    username: str
-    email: EmailStr
-
-    class Config:
-        orm_mode = True
-
-
-# ------------------------------
-# Movie Schemas
-# ------------------------------
-
-class MovieCreate(BaseModel):
-    movie_name: str
-    director: str
-    movie_genre: str
-    description: Optional[str] = None
-    release_year: int
-
-class MovieOut(BaseModel):
+class MovieBase(BaseModel):
     id: int
     movie_name: str
     director: str
-    movie_genre: str
-    description: Optional[str]
-    release_year: int
+    movie_Genre: str
+    description: str = None
+    Release_year: int
 
-    class Config:
-        orm_mode = True
+class MovieCreate(MovieBase):
+    pass
 
+class MovieOut(MovieBase):
+    pass
 
-# ------------------------------
-# Rating Schemas
-# ------------------------------
-
-class RatingCreate(BaseModel):
-    user_id: int
-    movie_id: int
-    rating: int
-    review: Optional[str] = None
-
-class RatingOut(BaseModel):
+class UserBase(BaseModel):
     id: int
-    user_id: int
-    movie_id: int
-    rating: int
-    review: Optional[str]
+    username: str
+    email: str
 
-    class Config:
-        orm_mode = True
+class UserCreate(UserBase):
+    pass
+
+class UserOut(UserBase):
+    pass
+
+
+
+
+#class Movie(MovieBase):
+#    id: int
+
+#    class Config:
+#        orm_mode = True
+
 
